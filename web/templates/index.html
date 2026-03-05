@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>ZoomieBox – Pi Dashboard</title>
+  <link rel="stylesheet" href="/static/styles.css">
+
+  <style>
+    #round-score-box {
+      margin-top: 6px;
+      padding: 8px 12px;
+      background: #111826;
+      border-radius: 8px;
+      font-family: consolas, monospace;
+      color: #8cf0ff;
+      border: 1px solid #1e2638;
+    }
+    #winner-banner {
+      display: none;
+      margin-top: 10px;
+      padding: 10px;
+      background: #0f3815;
+      border: 1px solid #2fcf49;
+      border-radius: 8px;
+      color: #a8ffbf;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="shell">
+
+  <h1>ZoomieBox – Pi Dashboard</h1>
+
+  <div class="breadcrumb">
+    Scan RFID cards → Start game → View highlights
+  </div>
+
+  <div class="row">
+    <div class="card" style="width:100%; max-width:650px;">
+      
+      <div class="card-header">
+        <div class="card-title">Players & Game Control</div>
+        <span class="pill yellow" id="game-state-pill">stopped</span>
+      </div>
+
+      <!-- MODE / PLAYERS -->
+      <div class="status-line">
+        <span class="status-label">Mode:</span>
+        <span class="status-value" id="status-mode">none</span>
+      </div>
+
+      <div class="status-line">
+        <span class="status-label">Players:</span>
+        <span class="status-value" id="status-players">0</span>
+      </div>
+
+      <!-- GAME HUD -->
+      <div id="game-hud">
+        <div id="round-score-box">
+          <div id="statusRound">Round: -</div>
+          <div id="statusScore">Score → P1 ⚡ 0 | P2 ⚡ 0</div>
+        </div>
+
+        <div id="winner-banner">Winner: -</div>
+      </div>
+
+      <!-- VS SETTINGS -->
+      <div id="vs-settings" style="display:none; margin-top:10px;">
+
+        <div class="status-line">
+          <span class="status-label">Difficulty:</span>
+          <select id="vs-difficulty">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+
+        <div class="status-line">
+          <span class="status-label">Rounds:</span>
+          <select id="vs-rounds">
+            <option value="1">1</option>
+            <option value="3">3</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+
+        <div class="status-line">
+          <span class="status-label">Grid:</span>
+          <span>
+            <input 
+              type="number" 
+              id="grid-cols" 
+              value="2" 
+              min="2" 
+              max="10" 
+              style="width:55px;"> ×
+            <input 
+              type="number" 
+              id="grid-rows" 
+              value="2" 
+              min="2" 
+              max="10" 
+              style="width:55px;">
+          </span>
+        </div>
+
+      </div>
+
+      <!-- NEW PLAYER REGISTRATION POPUP -->
+      <div id="new-player-box" 
+          style="display:none; margin-top:12px; padding:12px; 
+                  background:#111827; border:1px solid #2b3444; 
+                  border-radius:10px;">
+
+        <div style="font-weight:600; margin-bottom:8px;">
+          New Card Detected – Enter Name
+        </div>
+
+        <div style="margin-bottom:8px;">
+          <label style="font-size:0.85rem; color:#8b949e;">RFID UID:</label><br>
+          <input id="new-player-uid" 
+                readonly
+                style="width:100%; padding:6px; border-radius:6px; 
+                        background:#0d1117; border:1px solid #3a4556; 
+                        color:#e6edf3; margin-top:4px;">
+        </div>
+
+        <div style="margin-bottom:10px;">
+          <label style="font-size:0.85rem; color:#8b949e;">Player Name:</label><br>
+          <input id="new-player-name" 
+                placeholder="Enter name..."
+                style="width:100%; padding:6px; border-radius:6px; 
+                        background:#0d1117; border:1px solid #3a4556; 
+                        color:#e6edf3; margin-top:4px;">
+        </div>
+
+        <div class="button-row">
+          <button class="primary" onclick="saveNewPlayer()">Save</button>
+          <button class="danger" onclick="cancelNewPlayer()">Cancel</button>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button onclick="startRfidScan()">Start RFID scan</button>
+        <button onclick="stopRfidScan()">Stop RFID</button>
+        <button onclick="clearPlayers()">Clear players</button>
+      </div>
+
+      <div class="row">
+        <div class="player-box">
+          <div class="player-title">Player 1</div>
+          <div id="player1-name">(no card yet)</div>
+          <div id="player1-uid"></div>
+        </div>
+
+        <div class="player-box">
+          <div class="player-title">Player 2</div>
+          <div id="player2-name">(optional)</div>
+          <div id="player2-uid"></div>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button id="start-game-btn" onclick="startGame()">Start game</button>
+        <button onclick="stopGame()">Stop</button>
+        <button onclick="resetYaw()">Reset yaw</button>
+      </div>
+
+      <a href="/highlights">
+        <button class="highlight-button">Match history & highlights</button>
+      </a>
+
+      <pre id="log-box" class="log-box"></pre>
+
+    </div>
+  </div>
+
+</div> <!-- END SHELL -->
+
+<script src="/static/dashboard.js"></script>
+</body>
+
+</html>

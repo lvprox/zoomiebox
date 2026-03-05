@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Match history & highlights</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #111;
+            color: #eee;
+            padding: 20px;
+        }
+        h1 { color: #4CAF50; }
+        h2 { color: #ccc; margin-top: 30px; }
+
+        .match {
+            background: #222;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+        }
+        .match-header {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .winner {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .round {
+            margin-left: 18px;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .item {
+            background: #222;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        a:hover { color: #76FF76; }
+    </style>
+</head>
+<body>
+
+<h1>Match history &amp; highlights</h1>
+
+<h2>Recent matches</h2>
+{% if history and history|length > 0 %}
+    {% for m in history %}
+        <div class="match">
+            <div class="match-header">
+                Match #{{ m.id }} – {{ m.p1 or 'Player 1' }} vs {{ m.p2 or 'Player 2' }}
+            </div>
+
+            <div>
+                Winner:
+                <span class="winner">
+                {% if m.winner == 1 %}
+                    {{ m.p1 or 'Player 1' }}
+                {% elif m.winner == 2 %}
+                    {{ m.p2 or 'Player 2' }}
+                {% else %}
+                    Tie
+                {% endif %}
+                </span>
+            </div>
+
+            <div><b>Rounds:</b></div>
+            {% for r in m.rounds %}
+                <div class="round">
+                    Round {{ r.round_number }} –
+                    {{ r.p1_score }} : {{ r.p2_score }}
+                    (winner:
+                    {% if r.winner == 1 %}
+                        {{ m.p1 or 'Player 1' }}
+                    {% elif r.winner == 2 %}
+                        {{ m.p2 or 'Player 2' }}
+                    {% else %}
+                        Tie
+                    {% endif %}
+                    )
+                </div>
+            {% endfor %}
+
+            {% if m.video %}
+                <div style="margin-top:6px;">
+                    <a href="/video/{{ m.video }}" target="_blank">▶ Play highlight</a>
+                    <a href="/video/{{ m.video }}" download>⬇ Download</a>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No matches recorded yet.</p>
+{% endif %}
+
+<h2>All highlight files</h2>
+{% if files %}
+    {% for file in files %}
+        <div class="item">
+            <div><strong>{{ file }}</strong></div>
+            <a href="/video/{{ file }}" target="_blank">▶ Play</a>
+            <a href="/video/{{ file }}" download>⬇ Download</a>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No highlights available yet.</p>
+{% endif %}
+
+<br>
+<a href="/">⬅ Back to Dashboard</a>
+
+</body>
+</html>

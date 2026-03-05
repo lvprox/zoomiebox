@@ -1,0 +1,246 @@
+:root{
+  --bg:#0d1015;
+  --card:#161b22;
+  --accent:#3ea6ff;
+  --accent-soft:rgba(62,166,255,0.16);
+  --danger:#ff4d5b;
+  --text:#e6edf3;
+  --muted:#8b949e;
+}
+
+* { box-sizing:border-box; }
+
+/* -------------------------
+   PAGE LAYOUT
+   -------------------------*/
+body{
+  margin:0;
+  padding:16px;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:radial-gradient(circle at top,#1b2333 0,#050609 55%);
+  color:var(--text);
+
+  /* Center everything */
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  min-height:100vh;
+}
+
+.shell{
+  width:100%;
+  max-width:1000px;
+}
+
+/* -------------------------
+   TEXT & TITLES
+   -------------------------*/
+h1{
+  margin:0 0 4px;
+  font-size:1.4rem;
+  font-weight:600;
+  text-align:center;
+}
+
+.subtitle{
+  font-size:0.85rem;
+  color:var(--muted);
+  margin-bottom:12px;
+  text-align:center;
+}
+
+/* MAIN FLEX ROW */
+.row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  justify-content:center; /* ⭐ Keeps layout centered */
+}
+
+/* -------------------------
+   CARD
+   -------------------------*/
+.card{
+  background:rgba(11,15,23,0.9);
+  border-radius:14px;
+  padding:12px 14px;
+  border:1px solid rgba(255,255,255,0.06);
+  width:100%;
+  max-width:650px;
+  box-shadow:0 8px 30px rgba(0,0,0,0.35);
+}
+
+.card-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:8px;
+}
+
+.card-title{
+  font-size:0.95rem;
+  font-weight:600;
+}
+
+/* -------------------------
+   STATUS PILL
+   -------------------------*/
+.pill{
+  padding:3px 8px;
+  border-radius:999px;
+  font-size:0.75rem;
+  background:rgba(255,255,255,0.04);
+  color:var(--muted);
+}
+.pill.green{color:#6ee7b7;background:rgba(16,185,129,0.16);}
+.pill.red{color:#fca5a5;background:rgba(239,68,68,0.16);}
+.pill.yellow{color:#fde68a;background:rgba(234,179,8,0.16);}
+
+.status-line{
+  font-size:0.82rem;
+  margin:3px 0;
+}
+.status-label{ color:var(--muted); }
+.status-value{ color:#fff; font-weight:500; margin-left:4px; }
+
+/* -------------------------
+   BUTTONS (Gamer theme)
+   -------------------------*/
+button{
+  border:none;
+  border-radius:999px;
+  padding:8px 16px;
+  font-size:0.9rem;
+  cursor:pointer;
+  transition:0.2s;
+  font-weight:600;
+  background:rgba(255,255,255,0.06);
+  color:var(--text);
+}
+
+/* Blue primary button */
+button.primary,
+#start-game-btn {
+  background:var(--accent);
+  color:#020617;
+}
+button.primary:hover,
+#start-game-btn:hover {
+  background:#64b9ff;
+}
+
+/* Red danger button */
+button.danger{
+  background:var(--danger);
+  color:#020617;
+}
+button.danger:hover{
+  background:#ff6f7a;
+}
+
+/* Outline button */
+button.outline{
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.18);
+}
+button.outline:hover{
+  background:rgba(255,255,255,0.10);
+}
+
+button.small{
+  padding:5px 10px;
+  font-size:0.8rem;
+}
+
+button:disabled{
+  opacity:0.35;
+  cursor:not-allowed;
+}
+
+/* -------------------------
+   PLAYER BOXES — aesthetic gamer card
+   -------------------------*/
+.player-box {
+  flex:1 1 48%;
+  min-width:200px;
+  background:#0f1522;
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:10px;
+  padding:10px 14px;
+  margin-top:12px;
+
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+
+  box-shadow:0 4px 14px rgba(0,0,0,0.35);
+}
+
+.player-title {
+  font-size:0.9rem;
+  font-weight:700;
+  color:#8ab4ff;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  margin-bottom:4px;
+}
+
+#player1-name, #player2-name {
+  font-size:1rem;
+  font-weight:600;
+  color:#e4e9f2;
+}
+
+#player1-uid, #player2-uid {
+  font-size:0.75rem;
+  color:#8391a7;
+  word-break:break-all;
+}
+
+/* -------------------------
+   LOG BOX
+   -------------------------*/
+.log-box{
+  font-family:ui-monospace,Menlo,Monaco,Consolas;
+  font-size:0.75rem;
+  max-height:140px;
+  overflow-y:auto;
+  background:#020617;
+  border-radius:8px;
+  padding:8px;
+  border:1px solid rgba(15,23,42,0.8);
+  margin-top:10px;
+  white-space:pre-wrap;
+}
+
+/* -------------------------
+   CAMERA BOX
+   -------------------------*/
+.camera-box{
+  width:100%;
+  aspect-ratio:16/9;
+  border-radius:12px;
+  background:radial-gradient(circle at center,#111827 0,#020617 55%);
+  border:1px solid rgba(148,163,184,0.4);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.camera-box img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* -------------------------
+   RESPONSIVE
+   -------------------------*/
+@media (max-width:720px){
+  .row { 
+    flex-direction:column; 
+    align-items:center; 
+  }
+  .player-box { width:100%; }
+}
